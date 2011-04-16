@@ -1,11 +1,11 @@
 
 public class CollidableObject {
 	//Top left hand corner co-ordinates
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	//Bounding box
-	private int width;
-	private int height;
+	protected int width;
+	protected int height;
 
 	//HEY HO nothing to see here
 	public int getX () { return x; }
