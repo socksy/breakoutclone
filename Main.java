@@ -5,10 +5,10 @@ public class Main {
 		View view = new View();
 		Model model = new Model();
 		view.init();
-		while (!Display.isCloseRequested()) {
-			view.render(model);
+		while (true) {
+			view.render();
 		}		
-		Display.destroy();
 
 	}
 }
+
