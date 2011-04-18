@@ -1,2 +1,7 @@
 #!/bin/sh
-java -cp ".:./jars/*" -Djava.library.path=native/macosx Main
+unamestr=`uname`
+if [[ "$unamestr" == 'Darwin' ]]; then
+	java -cp ".:./jars/*" -Djava.library.path=native/macosx Main
+elif [[ "$unamestr" == 'Linux' ]]; then
+	java -cp ".:./jars/*" -Djava.library.path=native/linux Main
+fi

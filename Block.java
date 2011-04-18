@@ -6,8 +6,8 @@ public class Block extends CollidableObject {
 
 	Block () {
 		super ();
-		width = 25;
-		height = 5;
+		width = 150;
+		height = 15;
 	}
 	/**
 	 * param strength of the block — how many hits it takes to destroy it
