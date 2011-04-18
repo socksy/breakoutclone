@@ -20,10 +20,16 @@ public class View {
 	}
 
 
-	public void render(Model m) {
+	public void render() {
+		if (Display.isCloseRequested()) {
+			Display.destroy();
+			System.exit(0);
+		} else {
 			//render OpenGL
 			//Clear screen and depth buffer:
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+			Display.update();
+		}
 	}
 
 	private void drawPaddle (int paddle_pos) {

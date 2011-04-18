@@ -1,1 +1,1 @@
-java -cp .;res;jar\lwjgl.jar;jar\lwjgl_test.jar;jar\lwjgl_util.jar;jar\jinput.jar; -Djava.library.path=native\windows org.lwjgl.test.WindowCreationTest
+java -cp .;res;jars\lwjgl.jar;jars\lwjgl_test.jar;jars\lwjgl_util.jar;jars\jinput.jar;jars\jinput.jar;jars\slick-util.jar; -Djava.library.path=native\windows Main
