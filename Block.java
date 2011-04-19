@@ -6,7 +6,7 @@ public class Block extends CollidableObject {
 
 	Block () {
 		super ();
-		width = 150;
+		width = 55;
 		height = 15;
 	}
 	/**

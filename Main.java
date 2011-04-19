@@ -6,7 +6,7 @@ public class Main {
 		Model model = new Model();
 		view.init();
 		while (true) {
-			view.render();
+			view.render(model);
 		}		
 
 	}
