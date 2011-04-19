@@ -27,7 +27,7 @@ public class Block extends CollidableObject {
 		this.y = y;
 	}
 	//Getters and Setters
-	public void hit () { current_strength--; }
+	public void hit () { current_strength--; System.out.println("ow");}
 	public int getCurrentStrength () { return current_strength; }
 	
 	/**

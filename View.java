@@ -42,45 +42,54 @@ public class View {
 			
 			//Populates vertex arrays and pointers to switch between
 			setupVertexArrays(m);
+			
+			//Store everything in vertex buffer instead of immediate mode
+			//Then translate to where needed
+			GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 
 			//Push draw pop, resetting to allow translation to be from 0,0 each time, as opposed to relative
 			
-			GL11.glPushMatrix();
 			drawPaddle(m);
-			GL11.glPopMatrix();
-
+			drawBlocks(m);
+			drawBall(m);
 
 			Display.update();
 		}
 	}
 
 	private void drawPaddle (Model m) {
-		GL11.glColor3f(0.9f, 0.9f, 1.0f);
+		GL11.glPushMatrix();
+		GL11.glColor3f(0.5f, 0.9f, 1.0f);
 		Paddle p = m.getPaddle();
 		
-		//Store everything in vertex buffer instead of immediate mode
-		//Then translate to where needed
-		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		
-
+		//Set the vertex array pointer to the paddle vertices
 		GL11.glVertexPointer(2, 0, paddle_vertices_buffer);
 
-		GL11.glTranslatef(m.getPaddleX(),p.getY(),0f);
+		GL11.glTranslatef(m.getPaddleX(),p.getY(),0f); //translate from identity (z-axis is 0)
 		GL11.glDrawElements(GL11.GL_TRIANGLE_FAN, indices_buffer);
+		GL11.glPopMatrix();
 
-		/*GL11.glBegin(GL11.GL_TRIANGLE_FAN);
-		/*	GL11.glVertex2f(p.getX()+p.getWidth(),p.getY()-p.getHeight());
-			GL11.glVertex2f(p.getX()+p.getWidth(),p.getY());
-			GL11.glVertex2f(p.getX(), p.getY());
-			GL11.glVertex2f(p.getX(),p.getY()-p.getHeight());
+	}
 
-			GL11.glVertex2f(0,100);
-			GL11.glVertex2f(100,100);
-			GL11.glVertex2f(0,0);
-			GL11.glVertex2f(100,0);
-			GL11.glVertex2f(100,100);
-		GL11.glEnd();*/
-		
+	private void drawBall (Model m) {
+		GL11.glPushMatrix();
+		GL11.glColor3f(1.0f, 1.0f, 1.0f);
+		GL11.glVertexPointer(2, 0, ball_vertices_buffer);
+		GL11.glTranslatef(m.getBallX(), m.getBallY(), 0f);
+		GL11.glDrawElements(GL11.GL_TRIANGLE_FAN, indices_buffer);
+		GL11.glPopMatrix();
+	}
+
+	private void drawBlocks (Model m) {
+		GL11.glColor4f(1.0f, 0.5f, 0.8f, 1.0f);
+		GL11.glVertexPointer(2, 0, block_vertices_buffer);
+		for (Block b : m.getBlocks()) {
+			GL11.glPushMatrix();
+			GL11.glTranslatef(b.getX(), b.getY(), 0f);
+			GL11.glDrawElements(GL11.GL_TRIANGLE_FAN, indices_buffer);
+			GL11.glPopMatrix();
+		}
 	}
 
 	private void setupVertexArrays (Model m) {
@@ -96,10 +105,12 @@ public class View {
 		paddle_vertices_buffer = BufferUtils.createIntBuffer(8);
 		paddle_vertices_buffer.put(paddle_vertices).flip();
 
-		int[] ball_vertices = {0,0
-							  ,0+b.getWidth(),0
-							  ,0,0+b.getHeight()
-							  ,0+b.getWidth(),0+p.getHeight()};
+		int[] ball_vertices = {
+							 	 0,0
+								,10,0
+								,0,10
+								,10,10
+							  };
 		ball_vertices_buffer = BufferUtils.createIntBuffer(8);
 		ball_vertices_buffer.put(ball_vertices).flip();
 
