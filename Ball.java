@@ -1,11 +1,16 @@
+import org.lwjgl.Sys;
 public class Ball extends CollidableObject {
 	private int power = 1;
-	private int vector_x=0;
-	private int vector_y=0;
+	private float vector_x=0;
+	private float vector_y=0;
+	long last_frame = 0;
 
 	Ball () {
 		super();
 		width = height = 10;
+		x = View.DISPLAYWIDTH/2 + 5;
+		y = View.DISPLAYHEIGHT - 100;
+		vector_y=-1;
 	}
 
 	public void reverseYDirection () {
@@ -21,7 +26,7 @@ public class Ball extends CollidableObject {
 	}
 
 	public void addXForce (int force) {
-		vector_x += force;
+		vector_x += force/1000;
 	}
 
 	public void setPower() {
@@ -34,7 +39,20 @@ public class Ball extends CollidableObject {
 	 * Calculates where the next position should be.
 	 */
 	public void update () {
-		x += vector_x;
-		y += vector_y;
+		x += vector_x*getDelta();
+		y += vector_y*getDelta();
 	}
+
+	private long getTime() {
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+	public int getDelta() {
+	    long time = getTime();
+	    int delta = (int) (time - last_frame);
+	    last_frame = time;
+	 
+	    return delta;
+	}
+	
+	
 }

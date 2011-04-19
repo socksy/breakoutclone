@@ -1,8 +1,8 @@
 
 public class CollidableObject {
 	//Top left hand corner co-ordinates
-	protected int x;
-	protected int y;
+	protected float x;
+	protected float y;
 	//Bounding box
 	protected int width;
 	protected int height;
@@ -20,8 +20,9 @@ public class CollidableObject {
 	public boolean pointInBoundingBox (int x, int y) {
 		//if leftside <= x <= rightside && if top <= y <= bottom
 		if (this.x <= x && x <= this.x+width && this.y <= y && y <= this.y+height) {
+			System.out.println("Collision!");
 			return true;
-		} else {
+		}else {
 			return false;
 		}
 	}
