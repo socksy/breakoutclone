@@ -1,8 +1,17 @@
 import org.lwjgl.*;
 import org.lwjgl.opengl.*;
+import org.lwjgl.input.Mouse;
+import java.nio.IntBuffer;
+import java.nio.ByteBuffer;
+
 public class View {
-	final public int DISPLAYWIDTH = 800;
-	final public int DISPLAYHEIGHT = 600;
+	final public static int DISPLAYWIDTH = 800;
+	final public static int DISPLAYHEIGHT = 600;
+	IntBuffer paddle_vertices_buffer;
+	IntBuffer ball_vertices_buffer;
+	IntBuffer block_vertices_buffer;
+	ByteBuffer indices_buffer;
+
 	public void init() {
         	try {
 		    Display.setDisplayMode(new DisplayMode(DISPLAYWIDTH, DISPLAYHEIGHT));
@@ -17,10 +26,12 @@ public class View {
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, DISPLAYWIDTH, DISPLAYHEIGHT, 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+
+
 	}
 
 
-	public void render() {
+	public void render(Model m) {
 		if (Display.isCloseRequested()) {
 			Display.destroy();
 			System.exit(0);
@@ -28,11 +39,80 @@ public class View {
 			//render OpenGL
 			//Clear screen and depth buffer:
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+			
+			//Populates vertex arrays and pointers to switch between
+			setupVertexArrays(m);
+
+			//Push draw pop, resetting to allow translation to be from 0,0 each time, as opposed to relative
+			
+			GL11.glPushMatrix();
+			drawPaddle(m);
+			GL11.glPopMatrix();
+
+
 			Display.update();
 		}
 	}
 
-	private void drawPaddle (int paddle_pos) {
+	private void drawPaddle (Model m) {
+		GL11.glColor3f(0.9f, 0.9f, 1.0f);
+		Paddle p = m.getPaddle();
 		
+		//Store everything in vertex buffer instead of immediate mode
+		//Then translate to where needed
+		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+		
+
+		GL11.glVertexPointer(2, 0, paddle_vertices_buffer);
+
+		GL11.glTranslatef(m.getPaddleX(),p.getY(),0f);
+		GL11.glDrawElements(GL11.GL_TRIANGLE_FAN, indices_buffer);
+
+		/*GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+		/*	GL11.glVertex2f(p.getX()+p.getWidth(),p.getY()-p.getHeight());
+			GL11.glVertex2f(p.getX()+p.getWidth(),p.getY());
+			GL11.glVertex2f(p.getX(), p.getY());
+			GL11.glVertex2f(p.getX(),p.getY()-p.getHeight());
+
+			GL11.glVertex2f(0,100);
+			GL11.glVertex2f(100,100);
+			GL11.glVertex2f(0,0);
+			GL11.glVertex2f(100,0);
+			GL11.glVertex2f(100,100);
+		GL11.glEnd();*/
+		
+	}
+
+	private void setupVertexArrays (Model m) {
+		Paddle p = m.getPaddle();
+		Ball b = m.getBall();
+		Block bl = m.getBlocks().get(0); //Assuming homogenous blocks - not ideal, but will do for now.
+
+		int[] paddle_vertices = {0,0
+								,0+p.getWidth(),0
+								,0,0+p.getHeight()
+								,0+p.getWidth(),0+p.getHeight()};
+
+		paddle_vertices_buffer = BufferUtils.createIntBuffer(8);
+		paddle_vertices_buffer.put(paddle_vertices).flip();
+
+		int[] ball_vertices = {0,0
+							  ,0+b.getWidth(),0
+							  ,0,0+b.getHeight()
+							  ,0+b.getWidth(),0+p.getHeight()};
+		ball_vertices_buffer = BufferUtils.createIntBuffer(8);
+		ball_vertices_buffer.put(ball_vertices).flip();
+
+		int[] standard_block_vertices = {0,0
+										,0+bl.getWidth(),0
+										,0,0+bl.getHeight()
+										,0+bl.getWidth(),0+bl.getHeight()};
+
+		block_vertices_buffer = BufferUtils.createIntBuffer(8);
+		block_vertices_buffer.put(standard_block_vertices).flip();
+
+		byte[] indices = {0,1,3,2};
+		indices_buffer = BufferUtils.createByteBuffer(4);
+		indices_buffer.put(indices).flip();
 	}
 }
