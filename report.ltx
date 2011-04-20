@@ -39,7 +39,7 @@
 \item Model View Controller pattern instead of Model Delegate
 \item "Powerups" and paddle size changes are done on completion of levels
 \item ball speed, whilst changeable, happens as part of a vector design as opposed to a separate variable
-\end
+\end{enumerate}
 
 \chapter{Design}
 \section{Structure}
@@ -64,7 +64,18 @@
 \section{Collision Detection}
 \paragraph{}Simple bounding box collision detection was used. This appeared to be both fast and adequate for the job, and as such seems like a good a choice.
 
-\chapter{Screenshot}
+\section{Level Loading}
+\paragraph{}Level loading was done by specifying a grid of 13 columns of identical blocks, differing only in colour and in difficulty to destroy. This was loaded using GSON, a JSON reading library created by Google (advantages include support for generic types, useful for ArrayLists<Generic Type>.
+
+\chapter{Usage}
+\section{Screenshot}
 \includegraphics[scale=0.4]{screenshot}
 
+\section{To Run}
+\paragraph{}It should be fairly simple to run the game, as I have pieced together script files for various platforms. From a command line, either run ./main for linux & mac platforms, or run main.bat on a windows platform.
+\paragraph{}Left click to start the ball going, right click to reset. Press left click during game to cheat for testing purposes.
+
+\chapter{Lessons learned}
+\paragraph{}The most valuable techniques I learned in this particular project was the use of the OpenGL graphics library (if you allow the tautology). Not a simple library to learn, and one in which nearly all documentation provided online is out of date, or not usable within Java. This also encompassed learning various other things, such as Java's new I/O library use with channels and buffers (java.nio). A missed update call on one revision of code crashed the computer and proceeded to flood the screen with random pixels from the screenbuffer, which was a difficult bug to diagnose (switching between two computers whilst changing one line at a time discovered it in a couple of days).
+\paragraph{} Next time I have an opportunity to use OpenGL, I would like to build upon my knowledge by including textures on pictures, and learning the shader language. This would allow for a much prettier and presentable game, and could have allowed for special effects when things such as powerups were collected. Also, I couldn't fix issues with on screen text satisfactorily enough to leave in the game — and as such things such as the score are printed on the command line instead, which leads to a disjointed experience.
 \end{document}
