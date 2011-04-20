@@ -9,28 +9,28 @@ public class Model {
 	private Controller controller;
 	
 	//internal representations to provide to view
-	private int ball_x;
-	private int ball_y;
-	private int ball_vect_x;
-	private int ball_vect_y;
+	private float ball_x;
+	private float ball_y;
+	private float ball_vect_x;
+	private float ball_vect_y;
 	private int ball_power=1;
 	
-	private int paddle_x; //This will be updated whilst the paddle's one won't
-	private int paddle_y;
+	private float paddle_x;
+	private float paddle_y;
 
 	private int score=0;
-	private int delta;
 	
 	//Getters and setters
-	public int getBallX () { return ball_x; }
-	public int getBallY () { return ball_y; }
+	public float getBallX () { return ball_x; }
+	public float getBallY () { return ball_y; }
 	public ArrayList<Block> getBlocks () { return blocks; }
-	public int getPaddleX () { return paddle_x; }
+	public float getPaddleX () { return paddle_x; }
 	public Paddle getPaddle () { return paddle; } 
 	public Ball getBall () { return ball; }
+	public void increaseScore (int increase) { score+=increase;}
+	public int getScore() { return score; }
 
-	public Model (int delta) {
-		this.delta=delta;
+	public Model () {
 
 		ball = new Ball();
 		paddle = new Paddle();
@@ -47,14 +47,13 @@ public class Model {
 	public void populateBlockArray() {
 		for (int i=0; i<3; i++) {
 			for (int j=0; j<13; j++) {
-				blocks.add(new Block(10+(j*60),(i*25)+10,1));
+				blocks.add(new Block(10+(j*60),(i*25)+10,3));
 			}
 		}
 	}
 
-	public void updateModel() {
-		controller.update();
-		ball.update();
+	public void updateModel(int delta) {
+		score += controller.update(delta);
 		ball_x = ball.getX();
 		ball_y = ball.getY();
 		

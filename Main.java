@@ -1,6 +1,7 @@
 import org.lwjgl.Sys;
 
 public class Main {
+	private static long last_frame;
 	public static void main(String[] args) {
 		View view = new View();
 		Model model = new Model();
@@ -9,13 +10,13 @@ public class Main {
 			view.render(model);
 			int delta = getDelta();
 			model.updateModel(delta);
-		}		
+		}
 
 	}
-	private long getTime() {
-		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	public static long getTime() {
+    	return System.nanoTime() / 1000000;
 	}
-	public int getDelta() {
+	public static int getDelta() {
 	    long time = getTime();
 	    int delta = (int) (time - last_frame);
 	    last_frame = time;

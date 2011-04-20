@@ -26,6 +26,8 @@ public class View {
 		GL11.glLoadIdentity();
 		GL11.glOrtho(0, DISPLAYWIDTH, DISPLAYHEIGHT, 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
 
 	}
@@ -33,6 +35,7 @@ public class View {
 
 	public void render(Model m) {
 		if (Display.isCloseRequested()) {
+			System.out.println("Score: "+m.getScore());
 			Display.destroy();
 			System.exit(0);
 		} else {
@@ -82,13 +85,15 @@ public class View {
 	}
 
 	private void drawBlocks (Model m) {
-		GL11.glColor4f(1.0f, 0.5f, 0.8f, 1.0f);
 		GL11.glVertexPointer(2, 0, block_vertices_buffer);
 		for (Block b : m.getBlocks()) {
-			GL11.glPushMatrix();
-			GL11.glTranslatef(b.getX(), b.getY(), 0f);
-			GL11.glDrawElements(GL11.GL_TRIANGLE_FAN, indices_buffer);
-			GL11.glPopMatrix();
+			if(b.exists()) {
+				GL11.glColor4f(1.0f, 0.5f, 0.8f, (float)b.relativeStrengthLeft());
+				GL11.glPushMatrix();
+				GL11.glTranslatef(b.getX(), b.getY(), 0f);
+				GL11.glDrawElements(GL11.GL_TRIANGLE_FAN, indices_buffer);
+				GL11.glPopMatrix();
+			}
 		}
 	}
 
