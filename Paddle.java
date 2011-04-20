@@ -7,7 +7,7 @@ public class Paddle extends CollidableObject{
 		y = View.DISPLAYHEIGHT - height*3;
 	}
 	public void halveWidth() {
-		if(width>31) {width=width/2;}
+		if(width>32) {width=width/2;}
 	}
 	public void doubleWidth() {
 		if(width<256) {width=width*2;}
