@@ -31,14 +31,14 @@ public class Controller {
 		}*/
 
 		if (Mouse.isButtonDown(0)) {
-			ball.setYComponent(0.45f);
+			ball.setYComponent(-0.45f);
 		} else if (Mouse.isButtonDown(1)) {
 			ball.resetPosition();
 		}
 
 		for (Block b : blocks) {
 			if(b.hasCollidedWith(ball)&&b.exists()) {
-				b.hit();
+				b.hit(ball, paddle);
 				ball.reverseYDirection();
 				//ball.reverseXDirection();
 				return(10);
@@ -58,10 +58,10 @@ public class Controller {
 			ball.reverseYDirection();
 		} else if ( ball.getY()>=View.DISPLAYHEIGHT) {
 			ball.resetPosition();
-			return -100;
+			return -35; //Lose points when you die!
 		}
 
-		//No change to score!
+		//No change to score
 		return 0;
 	}
 

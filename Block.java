@@ -4,6 +4,7 @@ public class Block extends CollidableObject {
 	private int current_strength = 1;
 	private Colour colour = new Colour (0.3f, 1.0f, 0.6f);
 	private boolean exists = true;
+	private boolean powerup;
 
 	Block () {
 		super ();
@@ -43,12 +44,17 @@ public class Block extends CollidableObject {
 
 	
 	//Getters and Setters
-	public void hit () { 
+	public void hit (Ball ball, Paddle paddle) { 
 		System.out.println("Current Strength: "+current_strength);
-		current_strength--; 
+		current_strength -= ball.getPower(); 
 		if (current_strength<=0) {
 			exists=false;
 		}
+		if (powerup==true) {
+			System.out.println("POWERUP");
+			ball.setPower(3);
+			paddle.halveWidth();
+		} else { System.out.println("NORMAL");}
 	}
 	public int getCurrentStrength () { return current_strength; }
 	public Colour getColour() { return colour; }

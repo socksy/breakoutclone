@@ -41,9 +41,12 @@ public class Ball extends CollidableObject {
 
 	public double getYComponent () { return vector_y; }
 
-	public void setPower() {
+	public void setPower(int power) {
 		this.power = power;
 	}
+	public void increasePower() { power++; }
+
+	public int getPower() { return power; }
 
 
 
@@ -51,10 +54,10 @@ public class Ball extends CollidableObject {
 	 * Calculates where the next position should be.
 	 */
 	public void update (int delta) {
-		System.out.println("Potential Movement: "+vector_y*delta);
+		/*System.out.println("Potential Movement: "+vector_y*delta);
 		System.out.println("Actual Movement: "+vector_y);
 		System.out.println("Ball y:"+y);
-		System.out.println("Delta: "+delta);
+		System.out.println("Delta: "+delta);*/
 		/*if(delta==0){
 			return;
 		} else {*/

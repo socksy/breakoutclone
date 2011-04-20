@@ -7,13 +7,15 @@ import java.nio.ByteBuffer;
 public class View {
 	final public static int DISPLAYWIDTH = 800;
 	final public static int DISPLAYHEIGHT = 600;
-	IntBuffer paddle_vertices_buffer;
-	IntBuffer ball_vertices_buffer;
-	IntBuffer block_vertices_buffer;
-	ByteBuffer indices_buffer;
+	private IntBuffer paddle_vertices_buffer;
+	private IntBuffer ball_vertices_buffer;
+	private IntBuffer block_vertices_buffer;
+	private ByteBuffer indices_buffer;
+
+	private boolean firemode;
 
 	public void init() {
-        	try {
+        try {
 		    Display.setDisplayMode(new DisplayMode(DISPLAYWIDTH, DISPLAYHEIGHT));
 		    Display.create();
 		} catch (LWJGLException e) {
@@ -28,8 +30,6 @@ public class View {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-
 	}
 
 
@@ -55,6 +55,10 @@ public class View {
 			drawPaddle(m);
 			drawBlocks(m);
 			drawBall(m);
+			
+			//Text
+			//Color.white.bind();
+			//font.drawString(750, 550, "Score: "+m.getScore(), Color.white);
 
 			Display.update();
 		}
@@ -88,7 +92,7 @@ public class View {
 		GL11.glVertexPointer(2, 0, block_vertices_buffer);
 		for (Block b : m.getBlocks()) {
 			if(b.exists()) {
-				GL11.glColor4f(b.getColour().red, b.getColour().blue, b.getColour().green, (float)b.relativeStrengthLeft());
+				GL11.glColor4f(b.getColour().red, b.getColour().green, b.getColour().blue, (float)b.relativeStrengthLeft());
 				GL11.glPushMatrix();
 				GL11.glTranslatef(b.getX(), b.getY(), 0f);
 				GL11.glDrawElements(GL11.GL_TRIANGLE_FAN, indices_buffer);
@@ -97,7 +101,7 @@ public class View {
 		}
 	}
 
-	private void setupVertexArrays (Model m) {
+	public void setupVertexArrays (Model m) {
 		Paddle p = m.getPaddle();
 		Ball b = m.getBall();
 		Block bl = m.getBlocks().get(0); //Assuming homogenous blocks - not ideal, but will do for now.
