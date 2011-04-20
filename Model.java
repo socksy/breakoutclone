@@ -120,7 +120,7 @@ public class Model {
 		level_counter++;
 		level_counter = level_counter % no_of_levels;
 		populateBlockArray(readFile(filepath));
-		if (Math.random()>0.3) {
+		if (Math.random()>0.45) {
 			paddle.halveWidth();
 		} else {
 			paddle.doubleWidth();
