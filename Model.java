@@ -23,6 +23,7 @@ public class Model {
 	private float paddle_y;
 
 	private int score=0;
+	private int no_of_levels=3;
 	
 	//Getters and setters
 	public float getBallX () { return ball_x; }
@@ -38,7 +39,9 @@ public class Model {
 
 		ball = new Ball();
 		paddle = new Paddle();
-		populateBlockArray(readFile("level1.json"));
+		loadLevel();
+		paddle.doubleWidth();
+		paddle.doubleWidth();
 
 		ball_x=ball.getX();
 		ball_y=ball.getY();
@@ -75,7 +78,18 @@ public class Model {
 		ball_y = ball.getY();
 		
 		paddle_x = paddle.getX();
-		//TODO detect when level has been complete, advance to next 
+		
+		int blocksleft=0;
+		for (Block b: blocks) {
+			if(b.exists())
+				blocksleft++;
+		}
+		if (blocksleft <=0) {
+			blocks.clear();
+			loadLevel();
+			ball.resetPosition();
+		}
+
 	}
 
 	/** Reads file from String
@@ -96,6 +110,22 @@ public class Model {
 			System.err.println("File not found!");
 			return null;
 		}
+	}
+	
+	//Load next level
+	private int level_counter = 1;
+	private void loadLevel () {
+		String filepath = "level"+level_counter+".json";
+		System.out.println("Loading "+filepath);
+		level_counter++;
+		level_counter = level_counter % no_of_levels;
+		populateBlockArray(readFile(filepath));
+		if (Math.random()>0.3) {
+			paddle.halveWidth();
+		} else {
+			paddle.doubleWidth();
+		}
+		ball.increasePower();
 	}
 	
 }
