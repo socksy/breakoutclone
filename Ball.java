@@ -34,6 +34,11 @@ public class Ball extends CollidableObject {
 	public void setXComponent (double force) {
 		vector_x = force;
 	}
+	
+	public void setYComponent (double force) {
+		vector_y = force;
+	}
+
 	public double getYComponent () { return vector_y; }
 
 	public void setPower() {
@@ -50,13 +55,12 @@ public class Ball extends CollidableObject {
 		System.out.println("Actual Movement: "+vector_y);
 		System.out.println("Ball y:"+y);
 		System.out.println("Delta: "+delta);
-		if(delta<10){
-			y += vector_y*delta;
-			x += vector_x*delta;
-		} else {
+		/*if(delta==0){
+			return;
+		} else {*/
 			y += vector_y;
 			x += vector_x;
-		}
+		//}
 		//y -= vector_y);
 	}
 	

@@ -45,7 +45,7 @@ public class Model {
 	}
 
 	public void populateBlockArray() {
-		for (int i=0; i<3; i++) {
+		for (int i=0; i<4; i++) {
 			for (int j=0; j<13; j++) {
 				blocks.add(new Block(10+(j*60),(i*25)+10,3));
 			}
