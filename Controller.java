@@ -9,7 +9,7 @@ public class Controller {
 		ball = b;
 		paddle = p;
 		this.blocks = blocks;
-		b.addYForce(0.2f);
+		b.addYForce(0.35f);
 
 	}
 
@@ -29,6 +29,12 @@ public class Controller {
 		/*if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 			ball.addYForce(0.35f);
 		}*/
+
+		if (Mouse.isButtonDown(0)) {
+			ball.setYComponent(0.45f);
+		} else if (Mouse.isButtonDown(1)) {
+			ball.resetPosition();
+		}
 
 		for (Block b : blocks) {
 			if(b.hasCollidedWith(ball)&&b.exists()) {
