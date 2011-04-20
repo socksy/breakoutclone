@@ -1,0 +1,78 @@
+{
+  "outline": [
+    [0,0,0,0,0,1,1,0,0,0,0,0,0],
+    [0,0,0,1,1,1,1,1,1,0,0,0,0],
+    [0,0,1,2,1,1,1,2,1,0,0,0,0],
+    [0,0,1,1,1,1,1,1,1,0,0,0,0],
+    [0,0,0,1,2,1,2,1,0,0,0,0,0],
+    [0,0,0,1,2,2,2,1,0,0,0,0,0],
+    [0,0,0,0,1,1,1,0,0,0,0,0,0]
+
+  ],
+  "block_index": [
+    {
+      "starting_strength": 10,
+      "current_strength": 1,
+      "colour": {
+        "red": 0.0,
+        "green": 0.5,
+        "blue": 1.0
+      },
+      "exists": true,
+
+      "x": 0.0,
+      "y": 0.0,
+      "width": 55,
+      "height": 15,
+      "powerup": false
+    },
+    {
+      "starting_strength": 1,
+      "current_strength": 1,
+      "colour": {
+        "red": 0.3,
+        "green": 1.0,
+        "blue": 0.8
+      },
+      "exists": true,
+      "x": 0.0,
+      "y": 0.0,
+      "width": 55,
+      "height": 15,
+      "powerup": false
+
+    },
+    {
+      "starting_strength": 2,
+      "current_strength": 2,
+      "colour": {
+        "red": 1.0,
+        "green": 0.2,
+        "blue": 0.4
+      },
+      "exists": true,
+      "x": 0.0,
+      "y": 0.0,
+      "width": 55,
+      "height": 15,
+      "powerup": false
+    },
+    {
+      "starting_strength": 3,
+      "current_strength": 3,
+      "colour": {
+        "red": 0.2,
+        "green": 1.0,
+        "blue": 0.9
+      },
+      "exists": true,
+      "x": 0.0,
+      "y": 0.0,
+      "width": 55,
+      "height": 15,
+      "powerup": false
+    }
+  ],
+  "block_texture_path": "example.png",
+  "background_texture_path": "background.png"
+}
