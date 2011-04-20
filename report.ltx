@@ -30,13 +30,41 @@
 \item Changes in ball speed
 \item Changes in ball angle, depending on where it hits the paddle
 \item Extra levels with different arrangements of bricks
-\item Powerups modifying behaviour
+\item "Powerups" modifying behaviour
 
 \end{enumerate}
+\paragraph{} Some slight changes from the spec:
+
+\begin{enumerate}
+\item Model View Controller pattern instead of Model Delegate
+\item "Powerups" and paddle size changes are done on completion of levels
+\item ball speed, whilst changeable, happens as part of a vector design as opposed to a separate variable
+\end
 
 \chapter{Design}
 \section{Structure}
-\paragraph{} 
+\paragraph{}The structure is a Model View Controller design. This allows for a logical split of various parts of the program, and was well suited for the Light Weight Java Game Library, an OpenGL and OpenAL wrapper for Java that was chosen for this project.
 
+\subsection{View}
+\paragraph{}The view is where everything rendered from. This was done using OpenGL, with rectangles represented using vertices (and rendered technically with triangle fans, as graphics hardware tends to use triangles rather than quadrilaterals), stored in Vertex Arrays. This allowed for re-use, and instead of specifying exactly where to draw them on the screen, it allowed for relative dimensions, then to be translated later using a translation matrix.
+
+\subsection{Model}
+\paragraph{}The model is where all current state data was kept — everything from the score to exact position of each element on the screen. It holds references to every game object, and initialises calls to the controller. Different levels are loaded from files here, with the model populating the ArrayList representing all the blocks.
+
+\subsection{Controller}
+\paragraph{}The controller is where all the updates to the model's data take place, taking care of calculations of where the ball should be next, and taking input and moving the paddle's co-ordinates accordingly.
+
+\subsection{Everything else}
+\paragraph{} The Main class is a small class that created the initial Model, View and Controller objects. The Game Objects were all extended from a "CollidableObject" class. This allowed for the collision detection to be abstracted away from the workings, and allowed for a relatively clean structure, allowing for individual features on certain class.
+
+\section{Ball Movement}
+\paragraph{}The ball was designed to move as a vector. This was done for flexibility — direction could easily be changed, and the x and y components were separate allowing for easing reflection, amongst other things. This also meant that speed was variable, depending on how far the ball was moving in one axis. The direction of which a ball was reflected off a paddle was a function of how far along the paddle it was from the centre — as such, this means that larger paddles means faster balls.
+\paragraph{}Issues were raised by this use of movement — as it is moving every update, as opposed to a fixed length of time, it can sometimes speed up and down. One way of solving this is to multiply the change by a delta time since the last update. However, doing ths caused major issues — if no time had passed (in milliseconds), then it would multiply by 0, meaning that it could stay in the same place whilst colliding, and thus collide multiple times, ruining the accuracy of the score and increasing the likelihood of the ball reacting in unrealistic ways (such as moving at $4x10^9$ pixels a second). Eventually such a method was simply scrapped.
+
+\section{Collision Detection}
+\paragraph{}Simple bounding box collision detection was used. This appeared to be both fast and adequate for the job, and as such seems like a good a choice.
+
+\chapter{Screenshot}
+\includegraphics[scale=0.4]{screenshot}
 
 \end{document}

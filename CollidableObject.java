@@ -1,4 +1,8 @@
 
+import org.lwjgl.openal.AL;
+import org.newdawn.slick.openal.*;
+import java.io.*;
+
 public class CollidableObject {
 	//Top left hand corner co-ordinates
 	protected float x;
@@ -6,6 +10,8 @@ public class CollidableObject {
 	//Bounding box
 	protected int width;
 	protected int height;
+	//Collision noise
+	protected Audio noise;
 
 	//HEY HO nothing to see here
 	public float getX () { return x; }
@@ -14,7 +20,14 @@ public class CollidableObject {
 	public void setY (int y) { this.y = y; }
 	public int getWidth () { return width; }
 	public int getHeight () { return height; }
-
+	
+	CollidableObject (){
+		try {
+			noise = AudioLoader.getAudio("WAV", new FileInputStream("noise.wav"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	//Collision detection
 	public boolean pointInBoundingBox (int x, int y) {
@@ -36,6 +49,9 @@ public class CollidableObject {
 		//the bottom of one is below the top of another
 		if (y+height <= c.getY() || c.getY()+c.getHeight() <= y) return false;
 		
+		noise.playAsSoundEffect(0.8f, 0.2f, false);
+		SoundStore.get().poll(0);
+
 		return true;
 	}
 
