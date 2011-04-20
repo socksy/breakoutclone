@@ -1,9 +1,9 @@
 import java.util.*;
+import com.google.gson.*;
 
 public class Model {
 	//references to objects
 	private ArrayList<Block> blocks = new ArrayList<Block>();
-	private boolean homogenous_blocks = true;
 	private Ball ball;
 	private Paddle paddle;
 	private Controller controller;
@@ -45,9 +45,10 @@ public class Model {
 	}
 
 	public void populateBlockArray() {
+		//Standard boring grid
 		for (int i=0; i<4; i++) {
 			for (int j=0; j<13; j++) {
-				blocks.add(new Block(10+(j*60),(i*25)+10,3));
+				blocks.add(new Block(10+(j*60),(i*25)+10,4-i));
 			}
 		}
 	}

@@ -40,7 +40,7 @@ public class Controller {
 			if(b.hasCollidedWith(ball)&&b.exists()) {
 				b.hit();
 				ball.reverseYDirection();
-				ball.reverseXDirection();
+				//ball.reverseXDirection();
 				return(10);
 			}
 		}
@@ -58,6 +58,7 @@ public class Controller {
 			ball.reverseYDirection();
 		} else if ( ball.getY()>=View.DISPLAYHEIGHT) {
 			ball.resetPosition();
+			return -100;
 		}
 
 		//No change to score!

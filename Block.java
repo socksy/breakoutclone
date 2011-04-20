@@ -2,7 +2,7 @@
 public class Block extends CollidableObject {
 	private int starting_strength = 1;
 	private int current_strength = 1;
-	Colour colour = new Colour (0.3f, 1.0f, 0.6f);
+	private Colour colour = new Colour (0.3f, 1.0f, 0.6f);
 	private boolean exists = true;
 
 	Block () {
@@ -11,7 +11,7 @@ public class Block extends CollidableObject {
 		height = 15;
 	}
 	/**
-	 * param strength of the block — how many hits it takes to destroy it
+	 * @param strength of the block — how many hits it takes to destroy it
 	 */
 	Block (int strength) { 
 	 	this ();
@@ -27,6 +27,21 @@ public class Block extends CollidableObject {
 		this.x = x;
 		this.y = y;
 	}
+	
+	/**
+	  * @param x co-ordinate of top left of block
+	  * @param y co-ordinate of top left of block
+	  * @param strength of the block
+	  * @param colour of the block
+	  */
+	Block (int x, int y, int strength, Colour colour) {
+		this (strength);
+		this.x = x;
+		this.y = y;
+		this.colour=colour;
+	}
+
+	
 	//Getters and Setters
 	public void hit () { 
 		System.out.println("Current Strength: "+current_strength);
@@ -36,6 +51,7 @@ public class Block extends CollidableObject {
 		}
 	}
 	public int getCurrentStrength () { return current_strength; }
+	public Colour getColour() { return colour; }
 	public boolean exists () { return exists; }
 	
 	/**

@@ -88,7 +88,7 @@ public class View {
 		GL11.glVertexPointer(2, 0, block_vertices_buffer);
 		for (Block b : m.getBlocks()) {
 			if(b.exists()) {
-				GL11.glColor4f(1.0f, 0.5f, 0.8f, (float)b.relativeStrengthLeft());
+				GL11.glColor4f(b.getColour().red, b.getColour().blue, b.getColour().green, (float)b.relativeStrengthLeft());
 				GL11.glPushMatrix();
 				GL11.glTranslatef(b.getX(), b.getY(), 0f);
 				GL11.glDrawElements(GL11.GL_TRIANGLE_FAN, indices_buffer);
